@@ -1,0 +1,1 @@
+export const example = 'nice api call';

@@ -1,3 +1,8 @@
+import { example } from './api';
+
+console.log(example);
+
+// Base code
 function json(value, successHandler, errorHandler) {
   var xhr = typeof XMLHttpRequest != 'undefined' ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 
@@ -64,3 +69,9 @@ function transform(callback) {
     callback(schema);
   });
 }
+
+
+// App
+transform(function(data) {
+  document.body.querySelector('#result').innerHTML = JSON.stringify(data, null, "\t")
+});
