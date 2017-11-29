@@ -1,31 +1,6 @@
-import { example } from './api';
+import { json } from './api';
 
-console.log(example);
-
-// Base code
-function json(value, successHandler, errorHandler) {
-  var xhr = typeof XMLHttpRequest != 'undefined' ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-
-  xhr.open('get', value, true);
-  xhr.onreadystatechange = function() {
-    var status;
-    var data;
-    // https://xhr.spec.whatwg.org/#dom-xmlhttprequest-readystate
-    if (xhr.readyState == 4) {
-      // `DONE`
-      status = xhr.status;
-      if (status == 200) {
-        data = JSON.parse(xhr.responseText);
-        successHandler && successHandler(data);
-      } else {
-        errorHandler && errorHandler(status);
-      }
-    }
-  };
-  xhr.send();
-}
-
-function transform(callback) {
+const transform = callback => {
   json('./from.json', function(data) {
     var schema = {};
     schema.data = {};
