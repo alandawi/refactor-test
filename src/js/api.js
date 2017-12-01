@@ -1,22 +1,14 @@
-// Base code
-export const json = (value, successHandler, errorHandler) => {
-    var xhr = typeof XMLHttpRequest != 'undefined' ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-
-    xhr.open('get', value, true);
-    xhr.onreadystatechange = function() {
-        var status;
-        var data;
-        // https://xhr.spec.whatwg.org/#dom-xmlhttprequest-readystate
-        if (xhr.readyState == 4) {
-        // `DONE`
-        status = xhr.status;
-        if (status == 200) {
-            data = JSON.parse(xhr.responseText);
-            successHandler && successHandler(data);
-        } else {
-            errorHandler && errorHandler(status);
-        }
-        }
-    };
-    xhr.send();
+const handleErrors = response => {
+    if (!response.ok) {
+        throw Error(response.statusText);
+    }
+    return response;
 }
+
+export const getResponse = (url, successHandler, errorHandler) => {
+    fetch(url)
+    .then(handleErrors)
+    .then(response => response.json())
+    .then(obj => successHandler(obj))
+    .catch(error => console.error(error));
+};

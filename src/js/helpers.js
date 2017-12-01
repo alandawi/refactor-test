@@ -1,7 +1,9 @@
-import { json } from './api';
+import { getResponse } from './api';
 
 export const transform = callback => {
-    json('./from.json', function(data) {
+    getResponse('./from.json', data => {
+      console.log(data);
+
       var schema = {};
       schema.data = {};
   
